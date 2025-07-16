@@ -1,0 +1,29 @@
+/* src/components/StatusTag/StatusTag.css */
+.status-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.status-tag.default {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.status-tag.success {
+  background-color: #c8e6c9;
+  color: #2e7d32;
+}
+
+.status-tag.warning {
+  background-color: #fff9c4;
+  color: #f57f17;
+}
+
+.status-tag.error {
+  background-color: #ffcdd2;
+  color: #c62828;
+}

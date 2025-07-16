@@ -1,6 +1,5 @@
-import './StatusTag.css'; // Vamos criar este arquivo de estilo a seguir
+import './StatusTag.css'; 
 
-// Definindo os "tipos" de props que nosso componente aceitará
 interface StatusTagProps {
   text: string;
   variant?: 'success' | 'warning' | 'error' | 'default';

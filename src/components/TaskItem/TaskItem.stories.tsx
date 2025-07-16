@@ -1,14 +1,11 @@
-// src/components/TaskItem/TaskItem.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import { TaskItem } from './TaskItem';
-import { createStore } from '../../lib/redux/store'; // Importamos nossa função
+import { createStore } from '../../lib/redux/store'; 
 
 const meta: Meta<typeof TaskItem> = {
   title: 'Gerenciador de Tarefas/TaskItem (com Redux)',
   component: TaskItem,
-  // Decorators são "invólucros" para nossas histórias.
-  // Este decorator cria uma nova store para cada história e a provê ao componente.
   decorators: [
     (Story) => {
       const store = createStore();

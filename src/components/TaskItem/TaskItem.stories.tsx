@@ -22,11 +22,9 @@ const meta: Meta<typeof TaskItem> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Nossas histórias agora passam apenas o ID da tarefa que queremos renderizar.
-// O componente vai buscar o resto das informações (título, etc.) no Redux.
 export const TarefaDePrioridadeAlta: Story = {
   args: {
-    id: '1', // ID da tarefa no nosso estado inicial do slice
+    id: '1',
   },
 };
 

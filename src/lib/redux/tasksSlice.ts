@@ -1,4 +1,3 @@
-// src/lib/redux/tasksSlice.ts
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 interface Task {
@@ -8,30 +7,39 @@ interface Task {
   isCompleted: boolean;
 }
 
-// Estado inicial com dados fictícios para nossos testes e histórias
 const initialState: Task[] = [
-  { id: '1', title: 'Implementar autenticação', priority: 'Alta', isCompleted: false },
-  { id: '2', title: 'Criar componentes de login', priority: 'Média', isCompleted: false },
-  { id: '3', title: 'Corrigir cor do rodapé', priority: 'Baixa', isCompleted: true },
+  { id: '1', title: 'Apresentar o projeto de Web II', priority: 'Alta', isCompleted: false },
+  { id: '2', title: 'Estudar para a prova', priority: 'Média', isCompleted: false },
+  { id: '3', title: 'Fazer compras', priority: 'Baixa', isCompleted: true },
 ];
+
+interface AddTaskPayload {
+  title: string;
+  priority: 'Baixa' | 'Média' | 'Alta';
+}
 
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
-  // Reducers são as funções que podem alterar o nosso estado
   reducers: {
-    // Esta função irá alternar o estado 'isCompleted' de uma tarefa
     toggleTaskCompletion: (state, action: PayloadAction<string>) => {
       const task = state.find(task => task.id === action.payload);
       if (task) {
         task.isCompleted = !task.isCompleted;
       }
     },
+    addTask: (state, action: PayloadAction<AddTaskPayload>) => {
+      const newTask: Task = {
+        id: new Date().toISOString(), 
+        title: action.payload.title,
+        priority: action.payload.priority,
+        isCompleted: false,
+      };
+      state.unshift(newTask);
+    },
   },
 });
 
-// Exportamos a ação para que nossos componentes possam "despachá-la"
-export const { toggleTaskCompletion } = tasksSlice.actions;
+export const { toggleTaskCompletion, addTask } = tasksSlice.actions;
 
-// Exportamos o reducer para ser usado na nossa store
 export default tasksSlice.reducer;

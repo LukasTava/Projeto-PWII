@@ -7,12 +7,14 @@ import { createStore } from '../../lib/redux/store';
 describe('Componente TaskItem (com Redux)', () => {
   it('deve renderizar a tarefa com base no estado inicial do Redux', () => {
     const store = createStore();
+    
     render(
       <Provider store={store}>
         <TaskItem id="1" />
       </Provider>
     );
-    expect(screen.getByText('Implementar autenticação')).toBeInTheDocument();
+
+    expect(screen.getByText('Apresentar o projeto de Web II')).toBeInTheDocument();
     expect(screen.getByText('Pendente')).toBeInTheDocument();
   });
 

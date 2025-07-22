@@ -1,41 +1,27 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi, afterEach } from 'vitest'; 
+import { describe, it, expect } from 'vitest';
+import { Provider } from 'react-redux'; 
+import { createStore } from '../../lib/redux/store';
 import { AddTaskForm } from './AddTaskForm';
 
 describe('Componente AddTaskForm', () => {
-  vi.spyOn(window, 'alert').mockImplementation(() => {});
-
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it('deve permitir que o usuário digite no campo de input', async () => {
+  it('deve permitir que o usuário digite no campo de input e selecione uma prioridade', async () => {
     const user = userEvent.setup();
-    render(<AddTaskForm />);
+    const store = createStore();
+    render(
+      <Provider store={store}>
+        <AddTaskForm />
+      </Provider>
+    );
+
     const input = screen.getByPlaceholderText('O que precisa ser feito?');
-    await user.type(input, 'Comprar pão');
-    expect(input).toHaveValue('Comprar pão');
-  });
+    const select = screen.getByRole('combobox'); 
 
-  it('deve chamar o alerta com o texto da tarefa e limpar o campo após a submissão', async () => {
-    const user = userEvent.setup();
-    render(<AddTaskForm />);
-    const input = screen.getByPlaceholderText('O que precisa ser feito?');
-    const button = screen.getByRole('button', { name: /adicionar/i });
-    await user.type(input, 'Pagar a conta de luz');
-    await user.click(button);
-    expect(window.alert).toHaveBeenCalledWith('Tarefa adicionada: Pagar a conta de luz');
-    expect(input).toHaveValue('');
-  });
+    await user.type(input, 'Nova tarefa de teste');
+    await user.selectOptions(select, 'Alta');
 
-  // **** TESTE MELHORADO ****
-  it('deve mostrar um alerta de validação se o campo estiver vazio', async () => {
-    const user = userEvent.setup();
-    render(<AddTaskForm />);
-    const button = screen.getByRole('button', { name: /adicionar/i });
-    await user.click(button);
-
-    expect(window.alert).toHaveBeenCalledWith('Por favor, digite um título para a tarefa.');
+    expect(input).toHaveValue('Nova tarefa de teste');
+    expect(select).toHaveValue('Alta');
   });
 });

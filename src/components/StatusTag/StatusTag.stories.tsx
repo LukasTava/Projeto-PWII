@@ -1,12 +1,10 @@
-// src/components/StatusTag/StatusTag.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import { StatusTag } from '../StatusTag/StatusTag';
 
-// Configuração global do componente no Storybook
 const meta: Meta<typeof StatusTag> = {
-  title: 'Meus Componentes/StatusTag', // Como vai aparecer na barra lateral
+  title: 'Meus Componentes/StatusTag', 
   component: StatusTag,
-  tags: ['autodocs'], // Gera uma aba de documentação automática
+  tags: ['autodocs'], 
   argTypes: {
     variant: {
       control: { type: 'select' },

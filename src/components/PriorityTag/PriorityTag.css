@@ -1,0 +1,13 @@
+.priority-tag {
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: #1a1a1a;
+  width: fit-content;
+}
+
+.priority-tag.baixa { background-color: #28a745; color: white; }
+.priority-tag.media { background-color: #ffc107; }
+.priority-tag.alta { background-color: #dc3545; color: white; }

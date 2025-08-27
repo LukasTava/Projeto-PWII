@@ -1,14 +1,12 @@
-import './StatusTag.css'; 
+import './StatusTag.css';
 
 interface StatusTagProps {
-  text: string;
-  variant?: 'success' | 'warning' | 'error' | 'default';
+  completed: boolean;
 }
 
-export const StatusTag = ({ text, variant = 'default' }: StatusTagProps) => {
-  return (
-    <div className={`status-tag ${variant}`}>
-      {text}
-    </div>
-  );
+export const StatusTag = ({ completed }: StatusTagProps) => {
+  const status = completed ? 'concluida' : 'pendente';
+  const text = completed ? 'Concluída' : 'Pendente';
+
+  return <span className={`status-tag ${status}`}>{text}</span>;
 };

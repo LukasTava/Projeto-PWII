@@ -1,14 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { StatusTag } from '../StatusTag/StatusTag';
+import { StatusTag } from './StatusTag';
 
 const meta: Meta<typeof StatusTag> = {
-  title: 'Meus Componentes/StatusTag', 
+  title: 'Gerenciador de Tarefas/StatusTag',
   component: StatusTag,
-  tags: ['autodocs'], 
+  tags: ['autodocs'],
   argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: ['default', 'success', 'warning', 'error'],
+    completed: {
+      control: 'boolean',
     },
   },
 };
@@ -16,34 +15,14 @@ const meta: Meta<typeof StatusTag> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Exportando a primeira história: "Aprovado"
-export const Aprovado: Story = {
-  args: {
-    text: 'Aprovado',
-    variant: 'success',
-  },
-};
-
-// Exportando a segunda história: "Pendente"
 export const Pendente: Story = {
   args: {
-    text: 'Pendente',
-    variant: 'warning',
+    completed: false,
   },
 };
 
-// Exportando a terceira história: "Recusado"
-export const Recusado: Story = {
+export const Concluida: Story = {
   args: {
-    text: 'Recusado',
-    variant: 'error',
-  },
-};
-
-// Exportando a quarta história: "Padrão"
-export const Padrao: Story = {
-  args: {
-    text: 'Padrão',
-    variant: 'default',
+    completed: true,
   },
 };

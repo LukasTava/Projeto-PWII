@@ -1,44 +1,35 @@
-// src/components/AddTaskForm/AddTaskForm.tsx
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { addNewTask } from '../../lib/redux/tasksSlice';
+import type { AppDispatch } from '../../lib/redux/store';
 import './AddTaskForm.css';
-import { type AppDispatch } from '../../lib/redux/store';
-import { addTask } from '../../lib/redux/tasksSlice';
-
-type Priority = 'Baixa' | 'Média' | 'Alta';
 
 export const AddTaskForm = () => {
-  const [taskTitle, setTaskTitle] = useState('');
-  const [priority, setPriority] = useState<Priority>('Baixa');
-  const dispatch: AppDispatch = useDispatch();
+  const [title, setTitle] = useState('');
+  const [priority, setPriority] = useState<'baixa' | 'media' | 'alta'>('baixa');
+  const dispatch = useDispatch<AppDispatch>();
 
-  const handleSubmit = (event: React.Event) => {
-    event.preventDefault();
-    if (!taskTitle.trim()) {
-      alert('Por favor, digite um título para a tarefa.');
-      return;
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (title.trim()) {
+      dispatch(addNewTask({ title, priority }));
+      setTitle('');
+      setPriority('baixa');
     }
-
-    dispatch(addTask({ title: taskTitle, priority }));
-    
-    alert(`Tarefa "${taskTitle}" adicionada com sucesso!`);
-
-    setTaskTitle('');
-    setPriority('Baixa');
   };
 
   return (
-    <form className="add-task-form" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="add-task-form">
       <input
         type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         placeholder="O que precisa ser feito?"
-        value={taskTitle}
-        onChange={(e) => setTaskTitle(e.target.value)}
       />
-      <select value={priority} onChange={(e) => setPriority(e.target.value as Priority)}>
-        <option value="Baixa">Baixa</option>
-        <option value="Média">Média</option>
-        <option value="Alta">Alta</option>
+      <select value={priority} onChange={(e) => setPriority(e.target.value as any)}>
+        <option value="baixa">Baixa</option>
+        <option value="media">Média</option>
+        <option value="alta">Alta</option>
       </select>
       <button type="submit">Adicionar</button>
     </form>

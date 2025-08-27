@@ -1,41 +1,70 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { TaskItem } from './TaskItem';
-import { createStore } from '../../lib/redux/store'; 
+import type { Task } from '../../lib/redux/tasksSlice';
+
+const mockTask: Task = {
+  id: 1,
+  title: 'Fazer compras de supermercado',
+  completed: false,
+  priority: 'media',
+};
+
+const Mockstore = ({ children }: { children: React.ReactNode }) => (
+  <Provider
+    store={configureStore({
+      reducer: {
+        tasks: createSlice({
+          name: 'tasks',
+          initialState: [mockTask],
+          reducers: {},
+          extraReducers: (builder) => {
+            builder.addMatcher(
+              (actionMatcher) => actionMatcher.type.startsWith('tasks/'),
+              (state, actionObj) => {
+                console.log('[Storybook] Redux Action Dispatched:', actionObj);
+              }
+            );
+          },
+        }).reducer,
+      },
+    })}
+  >
+    {children}
+  </Provider>
+);
 
 const meta: Meta<typeof TaskItem> = {
-  title: 'Gerenciador de Tarefas/TaskItem (com Redux)',
+  title: 'Gerenciador de Tarefas/TaskItem',
   component: TaskItem,
-  decorators: [
-    (Story) => {
-      const store = createStore();
-      return (
-        <Provider store={store}>
-          <Story />
-        </Provider>
-      );
-    },
-  ],
+  decorators: [(story) => <Mockstore>{story()}</Mockstore>],
   tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TarefaDePrioridadeAlta: Story = {
+export const PendenteMedia: Story = {
   args: {
-    id: '1',
+    task: { ...mockTask },
   },
 };
 
-export const TarefaDePrioridadeMedia: Story = {
+export const PendenteAlta: Story = {
   args: {
-    id: '2',
+    task: { ...mockTask, priority: 'alta' },
   },
 };
 
-export const TarefaJaConcluida: Story = {
+export const PendenteBaixa: Story = {
   args: {
-    id: '3',
+    task: { ...mockTask, priority: 'baixa' },
+  },
+};
+
+export const Concluida: Story = {
+  args: {
+    task: { ...mockTask, completed: true, priority: 'baixa' },
   },
 };

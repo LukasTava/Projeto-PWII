@@ -1,28 +1,17 @@
 .status-tag {
-  display: inline-block;
-  padding: 4px 12px;
+  padding: 0.25rem 0.6rem;
   border-radius: 12px;
-  font-size: 12px;
-  font-weight: bold;
-  font-family: sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-.status-tag.default {
-  background-color: #e0e0e0;
+.status-tag.pendente {
+  background-color: #ffc107;
   color: #333;
 }
 
-.status-tag.success {
-  background-color: #c8e6c9;
-  color: #2e7d32;
-}
-
-.status-tag.warning {
-  background-color: #fff9c4;
-  color: #f57f17;
-}
-
-.status-tag.error {
-  background-color: #ffcdd2;
-  color: #c62828;
+.status-tag.concluida {
+  background-color: #28a745;
+  color: white;
 }

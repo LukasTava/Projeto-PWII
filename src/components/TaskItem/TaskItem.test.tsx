@@ -1,12 +1,22 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { Provider } from 'react-redux';
 import { TaskItem } from './TaskItem';
-import { createStore } from '../../lib/redux/store'; 
+import { createStore, type RootState } from '../../lib/redux/store';
+
+const mockState: Partial<RootState> = {
+  tasks: {
+    items: [
+      { id: '1', title: 'Apresentar o projeto de Web II', priority: 'Alta', isCompleted: false },
+      { id: '2', title: 'Estudar para a prova', priority: 'Média', isCompleted: false },
+    ],
+    status: 'succeeded',
+  },
+};
 
 describe('Componente TaskItem (com Redux)', () => {
   it('deve renderizar a tarefa com base no estado inicial do Redux', () => {
-    const store = createStore();
+    const store = createStore(mockState);
     
     render(
       <Provider store={store}>
@@ -18,8 +28,8 @@ describe('Componente TaskItem (com Redux)', () => {
     expect(screen.getByText('Pendente')).toBeInTheDocument();
   });
 
-  it('deve despachar a ação de toggle e mudar o status ao clicar no checkbox', () => {
-    const store = createStore();
+  it('deve despachar a ação de toggle e mudar o status ao clicar no checkbox', async () => {
+    const store = createStore(mockState);
 
     render(
       <Provider store={store}>
@@ -27,12 +37,12 @@ describe('Componente TaskItem (com Redux)', () => {
       </Provider>
     );
 
-    expect(screen.getByText('Pendente')).toBeInTheDocument();
-
     const checkbox = screen.getByRole('checkbox');
+    expect(checkbox).not.toBeChecked();
     fireEvent.click(checkbox);
-
-    expect(screen.getByText('Concluída')).toBeInTheDocument();
-    expect(screen.queryByText('Pendente')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Concluída')).toBeInTheDocument();
+    });
+    expect(screen.getByRole('checkbox')).toBeChecked();
   });
 });

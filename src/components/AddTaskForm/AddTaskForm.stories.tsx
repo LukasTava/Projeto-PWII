@@ -1,21 +1,36 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Provider } from 'react-redux'; 
+import { Provider } from 'react-redux';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { AddTaskForm } from './AddTaskForm';
-import { createStore } from '../../lib/redux/store'; 
+
+const Mockstore = ({ children }: { children: React.ReactNode }) => (
+  <Provider
+    store={configureStore({
+      reducer: {
+        tasks: createSlice({
+          name: 'tasks',
+          initialState: [],
+          reducers: {},
+          extraReducers: (builder) => {
+            builder.addMatcher(
+              (actionMatcher) => actionMatcher.type.startsWith('tasks/'),
+              (state, actionObj) => {
+                console.log('[Storybook] Redux Action Dispatched:', actionObj);
+              }
+            );
+          },
+        }).reducer,
+      },
+    })}
+  >
+    {children}
+  </Provider>
+);
 
 const meta: Meta<typeof AddTaskForm> = {
   title: 'Gerenciador de Tarefas/AddTaskForm',
   component: AddTaskForm,
-  decorators: [
-    (Story) => {
-      const store = createStore();
-      return (
-        <Provider store={store}>
-          <Story />
-        </Provider>
-      );
-    },
-  ],
+  decorators: [(story) => <Mockstore>{story()}</Mockstore>],
   tags: ['autodocs'],
 };
 

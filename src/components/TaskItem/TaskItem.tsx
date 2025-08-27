@@ -1,55 +1,45 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../lib/redux/store';
+import type { Task } from '../../lib/redux/tasksSlice';
+import { toggleTask, deleteTask } from '../../lib/redux/tasksSlice';
 import { StatusTag } from '../StatusTag/StatusTag';
+import { PriorityTag } from '../PriorityTag/PriorityTag';
 import './TaskItem.css';
-import { type RootState, type AppDispatch } from '../../lib/redux/store';
-import { toggleTaskCompletion } from '../../lib/redux/tasksSlice';
 
 interface TaskItemProps {
-  id: string;
+  task: Task;
 }
 
-export const TaskItem = ({ id }: TaskItemProps) => {
-  const dispatch: AppDispatch = useDispatch();
-  const task = useSelector((state: RootState) => 
-    state.tasks.find(t => t.id === id)
-  );
-
-  if (!task) {
-    return null;
-  }
-
-  const { title, priority, isCompleted } = task;
-
-  const getPriorityVariant = (p: typeof priority) => {
-    if (p === 'Alta') return 'error';
-    if (p === 'Média') return 'warning';
-    return 'default';
-  };
+export const TaskItem = ({ task }: TaskItemProps) => {
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleToggle = () => {
-    dispatch(toggleTaskCompletion(id));
+    dispatch(toggleTask(task));
   };
 
+  const handleDelete = () => {
+    dispatch(deleteTask(task.id));
+  };
+
+  const priorityClass = `priority-${task.priority}`;
+
   return (
-    <div className={`task-item ${isCompleted ? 'completed' : ''}`}>
-      <div className="task-info">
-        <input
-          type="checkbox"
-          checked={isCompleted}
-          onChange={handleToggle}
-        />
-        <span className="task-title">{title}</span>
+    <div className={`task-item ${task.completed ? 'completed' : ''} ${priorityClass}`}>
+      <div className="task-content">
+        <div className="task-main">
+          <input
+            type="checkbox"
+            checked={task.completed}
+            onChange={handleToggle} 
+          />
+          <span className="task-title">{task.title}</span>
+        </div>
+        <div className="tags-container">
+          <StatusTag completed={task.completed} />
+          <PriorityTag priority={task.priority} />
+        </div>
       </div>
-      <div className="task-tags">
-        <StatusTag
-          text={isCompleted ? 'Concluída' : 'Pendente'}
-          variant={isCompleted ? 'success' : 'default'}
-        />
-        <StatusTag
-          text={priority}
-          variant={getPriorityVariant(priority)}
-        />
-      </div>
+      <button onClick={handleDelete} className="delete-button">&times;</button>
     </div>
   );
 };

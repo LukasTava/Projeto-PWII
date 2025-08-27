@@ -1,34 +1,27 @@
-/* src/components/AddTaskForm/AddTaskForm.css */
 .add-task-form {
   display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
 }
 
-.add-task-form input, .add-task-form select {
-  padding: 10px;
-  border: 1px solid #ccc;
+.add-task-form input,
+.add-task-form select,
+.add-task-form button {
+  padding: 0.75rem;
   border-radius: 8px;
-  font-size: 16px;
-  font-family: sans-serif;
-  background-color: white;
+  border: 1px solid #555;
+  background-color: #333;
+  color: #eee;
+  font-size: 1rem;
 }
 
 .add-task-form input {
-  flex-grow: 1;
+  flex-grow: 1; 
 }
 
 .add-task-form button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 8px;
-  font-size: 16px;
+  background-color: #535bf2;
+  border-color: #535bf2;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.add-task-form button:hover {
-  background-color: #0056b3;
+  font-weight: 600;
 }

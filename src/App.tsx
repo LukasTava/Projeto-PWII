@@ -1,5 +1,3 @@
-// Local: src/App.tsx
-
 import { Outlet, Link } from 'react-router-dom';
 import { AddTaskForm } from './components/AddTaskForm/AddTaskForm';
 import './App.css';

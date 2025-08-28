@@ -1,6 +1,6 @@
 # Projeto Programação para Web II - Gerenciador de Tarefas
 
-Este é o projeto da primeira etapa da disciplina de Programação para Web II, referente ao semestre 2025.1. O projeto consiste em um "catálogo de componentes" para um futuro sistema Gerenciador de Tarefas, utilizando React, TypeScript e Storybook, com gerenciamento de estado global feito com Redux.
+Este é o projeto da primeira etapa da disciplina de Programação para Web II. O projeto consiste em uma aplicação de Gerenciador de Tarefas, utilizando React, TypeScript e Storybook, com gerenciamento de estado global feito com Redux Toolkit.
 
 ---
 
@@ -16,19 +16,21 @@ Este é o projeto da primeira etapa da disciplina de Programação para Web II, 
 * **TypeScript:** Superset do JavaScript que adiciona tipagem estática ao projeto.
 * **Vite:** Ferramenta de build para um ambiente de desenvolvimento rápido e otimizado.
 * **Redux Toolkit:** Para gerenciamento de estado global da aplicação.
-* **Storybook:** Ambiente para desenvolvimento e documentação isolada de componentes.
+* **React Router:** Para a navegação entre as páginas da aplicação.
+* **Storybook:** Para desenvolvimento e documentação isolada de componentes.
 * **Vitest & React Testing Library:** Para a escrita e execução de testes unitários.
-* **Cypress:** Para a escrita e execução de testes de sistema (end-to-end).
+* **Cypress:** Para a escrita e execução de testes de ponta a ponta (end-to-end).
+* **JSON Server:** Para simular uma API REST para as tarefas.
 
 ---
 
 ## Como Executar o Projeto
 
-Siga as instruções abaixo para executar o catálogo de componentes e os testes em um ambiente de desenvolvimento.
+Siga as instruções abaixo para configurar e executar o projeto em seu ambiente de desenvolvimento.
 
 ### Pré-requisitos
 
-* É necessário ter o [Node.js](https://nodejs.org/) (versão LTS) instalado.
+* É necessário ter o [Node.js](https://nodejs.org/) (versão LTS recomendada) instalado.
 * Um gerenciador de pacotes como `npm` (que já vem com o Node.js).
 
 ### Passos para Instalação
@@ -48,30 +50,29 @@ Siga as instruções abaixo para executar o catálogo de componentes e os testes
     npm install
     ```
 
-### Executando o Catálogo de Componentes
+---
 
-Para visualizar os componentes desenvolvidos de forma isolada no Storybook:
+### Executando a Aplicação Principal
+
+Para rodar a aplicação do Gerenciador de Tarefas:
+
+1.  **Inicie o servidor da API (json-server):**
+    *Abra um terminal e execute:*
+    ```bash
+    npm run server
+    ```
+    *Isso iniciará a API mock na porta `3001`.*
+
+2.  **Inicie a aplicação React:**
+    *Abra um **segundo** terminal e execute:*
+    ```bash
+    npm run dev
+    ```
+    *A aplicação estará disponível em `http://localhost:5173`.*
+
+### Executando o Catálogo de Componentes (Storybook)
+
+Para visualizar, desenvolver e testar os componentes de forma isolada no Storybook:
 
 ```bash
 npm run storybook
-```
-O Storybook estará disponível no endereço `http://localhost:6006`.
-
-### Executando os Testes
-
-O projeto possui dois tipos de testes automatizados.
-
-1.  **Testes Unitários:**
-    Para rodar os testes dos componentes de forma isolada via terminal, execute:
-    ```bash
-    npm test
-    ```
-
-2.  **Testes End-to-End (e2e):**
-    Para abrir o painel do Cypress e rodar os testes de fluxo do usuário:
-    * Primeiro, garanta que o Storybook esteja rodando em um terminal (`npm run storybook`).
-    * Em **outro** terminal, execute:
-    ```bash
-    npx cypress open
-    ```
-    Dentro do painel do Cypress, selecione "E2E Testing" e clique nos arquivos de teste para executá-los.

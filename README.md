@@ -76,3 +76,41 @@ Para visualizar, desenvolver e testar os componentes de forma isolada no Storybo
 
 ```bash
 npm run storybook
+```
+
+O Storybook normalmente ficará disponível em `http://localhost:6006`.
+
+## Executando os Testes Automatizados
+
+O projeto inclui testes unitários e testes end-to-end.
+
+### Testes Unitários com Vitest
+
+Para rodar os testes unitários (componentes e lógica do Redux):
+
+```bash
+npm test
+```
+# Testes Automatizados
+
+Os resultados serão exibidos no terminal.
+
+> **Observação:** alguns projetos usam `npm run test` — verifique o `package.json` se o script for diferente.
+
+---
+
+## Testes End-to-End com Cypress
+
+Os testes E2E simulam a interação do usuário com a aplicação ou com componentes no Storybook.
+
+### Testando a aplicação completa
+
+1. Garanta que os servidores abaixo estejam rodando em terminais separados:
+   - `npm run server` (servidor da API)
+   - `npm run dev` (servidor de desenvolvimento)
+
+2. Abra um terceiro terminal e execute:
+
+```bash
+npx cypress open
+```

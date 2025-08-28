@@ -8,7 +8,7 @@ export interface Task {
   completed: boolean;
 }
 
-interface TasksState {
+export interface TasksState {
   items: Task[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
